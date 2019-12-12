@@ -1,8 +1,10 @@
 # ECPay HTTP Request Analysis
 
-## HOST: `https://vendor.ecpay.com.tw`
+## Header
 
-## Cookies
+- ### Host: `vendor.ecpay.com.tw`
+- ### User-Agent: `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0`
+- ### Cookies
   - ASP.NET_SessionId
   - ecpay_allpay_ecpay
   - ecpay_allpay_ecpay_ext
@@ -11,12 +13,15 @@
   - gw_allpay_p
   - vendor_allpay_p
 
-## Login
+## Payload
+
+- ### Login
   - type: POST
-  - url: TODO
+  - url: `/User/LogOn_Step2`
   - arguments:
+
     | Name | Info | Value | Condition |
-    | ---- | ---- | ----- | ---- |
+    | ---- | ---- | ----- | --------- |
     | *Account | 帳號 |
     | *AuthID | | 1 | *CONSTANT* |
     | *grecaptchaResponse | | *None* | *CONSTANT* |
@@ -25,12 +30,22 @@
     | *CaptchaValue | 圖形驗證碼 |
     | *_mvcCaptchaGuid | 圖形GUID |
 
-## Query AIO Trade
+- ### Login Finish
+  - type: POST
+  - url: `/User/LogOnFinish`
+  - arguments:
+
+    | Name | Info | Value | Condition |
+    | ---- | ---- | ----- | --------- |
+    | FinishedRtnCode | | 1 | *CONSTANT* |
+
+- ### Query AIO Trade
   - type: POST
   - url: `/TradeNoAio/Query`
   - arguments:
+
     | Name | Info | Value | Condition |
-    | ---- | ---- | ----- | ---- |
+    | ---- | ---- | ----- | --------- |
     | QueryDate | | 6: 訂單日期 (Default)<br>4: 撥款日期<br>2: 付款日期 |
     | StartDate | 開始日期 | YYYY-MM-DD |
     | EndDate | 結束日期 | YYYY-MM-DD |
@@ -51,10 +66,11 @@
     | PageSize | 每頁顯示筆數 | 10 (Default)<br>20<br>50<br>100 |
     | PageSize2 | | 10 | *CONSTANT* |
 
-## Query Pay Link
+- ### Query Pay Link
   - type: POST
   - url: `/QuickCollect/QueryPayLink`
   - arguments:
+
     | Name | Info | Value | Condition |
     | ---- | ---- | ----- | --------- |
     | *StartDate | 開始日期 | YYYY-MM-DD |
@@ -62,10 +78,11 @@
     | URLStatus | 連結狀態 | 1: 開啟 (Default)<br>2: 關閉<br>4: 違規下架 |
     | QueryAll | 所有開啟連結 | 0: 根據其他參數篩選<br>1: 所有開啟連結 |
 
-## Create Pay Link
+- ### Create Pay Link
   - type: POST
   - url:
   - arguments:
+
     | Name | Info | Value | Condition |
     | ---- | ---- | ----- | --------- |
     | *QuickPay.QuickPayName | 收款連結名稱 |
